@@ -4,12 +4,15 @@ from spitzer.lib.core.connection import Connection
 
 class Install(Connection):
 
-    def __init__(self, targets: list):
+    __path = str()
+
+    def __init__(self, targets: list, path: str):
         super(Install, self).__init__(targets)
+        self.__path = path
 
     def run(self):
         meta_table = re.sub(re.compile('[\n]|[\s\s]{2}'), '', self.get_meta_table_template())
-        self.exec_query(meta_table, True)
+        self.exec_query(meta_table)
         print("Spitzer successfully instaled =)")
         return True
 

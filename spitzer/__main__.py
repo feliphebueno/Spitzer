@@ -31,7 +31,7 @@ def main():
                 assert False, "unhandled option"
 
         command = sys.argv[1]
-        if command not in ('migrate', 'migrations', 'create', 'install', 'rollback'):
+        if command not in ('migrate', 'migrations', 'make_migrations', 'create', 'install', 'rollback'):
             raise getopt.GetoptError("Unrecognized command {0}".format(command))
     except IndexError:
         usage()
