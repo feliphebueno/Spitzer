@@ -1,0 +1,15 @@
+.DS_Store
+.idea/
+__pycache__/
+log/
+settings.py
+wsgi.py
+
+# virtualenv
+bin/
+include/
+lib64/
+local/
+pip-selfcheck.json
+spitzer.yaml
+migrations/
