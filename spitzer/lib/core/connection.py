@@ -44,6 +44,24 @@ class Connection(object):
 
         return result
 
+    @staticmethod
+    def exec_single_target(target: str, query: str):
+        try:
+            cursor = connections[target].cursor()
+            cursor.execute(query)
+
+            result = {
+                'success': True,
+                'result': cursor.fetchall()
+            }
+        except BaseException as e:
+            result = {
+                'success': False,
+                'result': str(e)
+            }
+
+        return result
+
     def start_transaction(self):
         for target in self.__targets:
             transaction.savepoint(using=target)

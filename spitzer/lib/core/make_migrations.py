@@ -1,11 +1,9 @@
-import hashlib
 import os
-from collections import OrderedDict
+import hashlib
 
 from django.db import transaction
 
 from spitzer.lib.core.connection import Connection
-from spitzer.lib.core.migrations import Migrations
 from spitzer.lib.models.spitzer_migrations import SpitzerMigrationsModel
 from spitzer.lib.core.reader import Reader
 
@@ -67,23 +65,3 @@ class MakeMigrations(Connection, Reader):
             print("Spitzer could not register the migration file: {0}".format(str(e)))
 
         return True
-
-    def get_migrations_meta(self):
-        migrations = OrderedDict()
-
-        for target in self.__targets:
-            migrations[target] = {
-                "executed": list(),
-                "pending": list(),
-                "both": list(),
-            }
-
-            search = SpitzerMigrationsModel.objects.using(target).all()
-            for line in search:
-                data = Migrations.get_migration_data(line)
-                if line.executed == 1:
-                    migrations[target]['executed'].append(data)
-                else:
-                    migrations[target]['pending'].append(data)
-                migrations[target]['both'].append(data)
-        return migrations

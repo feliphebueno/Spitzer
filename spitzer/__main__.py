@@ -12,6 +12,8 @@ django.setup()
 from spitzer import __version__
 from spitzer.lib.main import Main
 
+commands = ('migrate', 'show_migrations', 'make_migrations', 'create', 'install', 'rollback')
+
 
 def main():
     try:
@@ -31,7 +33,7 @@ def main():
                 assert False, "unhandled option"
 
         command = sys.argv[1]
-        if command not in ('migrate', 'show_migrations', 'make_migrations', 'create', 'install', 'rollback'):
+        if command not in commands:
             raise getopt.GetoptError("Unrecognized command {0}".format(command))
     except IndexError:
         usage()
@@ -44,11 +46,15 @@ def main():
 
     working_dir = sys.argv[0]
 
-    Main(command, working_dir).run()
+    try:
+        Main(command, working_dir).run()
+    except BaseException as e:
+        print(e)
+        sys.exit(1)
 
 
 def usage():
-    print("python spitzer comand [args]")
+    print("python spitzer comand [{0}]".format(str(commands)))
 
 
 def version():

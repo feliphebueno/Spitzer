@@ -5,6 +5,7 @@ from spitzer.lib.models.spitzer_migrations import SpitzerMigrationsModel
 
 from terminaltables import AsciiTable
 
+
 class Migrations(Connection):
 
     __targets = list()
@@ -18,7 +19,7 @@ class Migrations(Connection):
     def run(self):
         migrations = OrderedDict()
         for target in self.__targets:
-            lines = SpitzerMigrationsModel.objects.using(target)
+            lines = SpitzerMigrationsModel.objects.using(target).all().order_by('datetime')
             migrations[target] = list()
             for line in lines:
                 migrations[target].append(self.get_migration_data(line))

@@ -1,6 +1,7 @@
 from spitzer.lib.config.loader import ConfigLoader
 from spitzer.lib.core.create import Create
 from spitzer.lib.core.make_migrations import MakeMigrations
+from spitzer.lib.core.migrate import Migrate
 from spitzer.lib.core.migrations import Migrations
 from spitzer.lib.drivers.connector import Connector
 from spitzer.lib.core.install import Install
@@ -35,7 +36,9 @@ class Main(object):
         elif cmd == 'make_migrations':
             MakeMigrations(targets, path).run()
         elif cmd == 'migrate':
-            pass
+            Migrate(targets, path).run()
+        elif cmd == 'clear_all':
+            print("Not implemented yet.")
         else:
             raise TypeError("Unrecognized command {0}".format(cmd))
 
