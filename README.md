@@ -36,4 +36,6 @@ $ python -m spitzer migrate
 //List your migrations
 $ python -m spitzer show_migrations
 
+//You will see something like this:
 ```
+<img width="847" alt="captura de tela 2017-09-06 as 10 19 50" src="https://user-images.githubusercontent.com/6662338/30114124-41cbd75c-92ed-11e7-82ef-c05632c8e25a.png">
