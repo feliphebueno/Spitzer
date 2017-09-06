@@ -44,7 +44,7 @@ def main():
         usage()
         sys.exit(2)
 
-    working_dir = sys.argv[0]
+    working_dir = os.getcwd()
 
     try:
         Main(command, working_dir).run()

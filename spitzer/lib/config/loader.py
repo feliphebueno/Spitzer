@@ -16,7 +16,7 @@ class ConfigLoader(object):
         spitzer_file = "{0}/spitzer.yaml".format(self.__working_dir)
 
         if not os.path.isfile(spitzer_file):
-            raise IOError("Composer could not find a spitzer.yaml file in {0}.\n"
+            raise IOError("Spitzer could not find a spitzer.yaml file in {0}.\n"
                           "To initialize a porject, please create a spitzer.yaml file as described in "
                           " https://github.com/feliphebueno/Spitzer/wiki/spitzer.yaml".format(self.__working_dir))
         self.__configuration_file = spitzer_file
