@@ -13,3 +13,6 @@ local/
 pip-selfcheck.json
 spitzer.yaml
 migrations/
+spitzer.egg-info/
+build/
+dist/
