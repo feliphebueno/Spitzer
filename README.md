@@ -13,6 +13,11 @@ Django-based multi-target migration tool
 pip install rinzler
 ```
 
+# Config
+
+Place a copy of the sample [spitzer.yaml](https://github.com/feliphebueno/Spitzer/wiki/spitzer.yaml) at 
+your app's root directory.
+
 # Usage
 ```PHP
 //Configure e install Spitzer
