@@ -1,3 +1,4 @@
+import hashlib
 import os
 
 import sys
@@ -28,6 +29,7 @@ class Migrate(Connection, Reader):
             for line in search:
                 migration = self.get_migration_content(line.migration)
                 result = self.migrate(target, migration)
+
                 if line.migration not in self.migrated:
                     self.migrated.append(line.migration)
 
@@ -53,22 +55,26 @@ class Migrate(Connection, Reader):
         return True
 
     def register_result(self, results: list):
-        self.start_transaction()
         for result in results:
             line = result['line']
             target = result['target']
             result_line = result['result']
 
-            result['line'].message = 'OK' if len(result_line['result']) < 1 else result_line['result']
-            result['line'].success = 1 if result_line['success'] is True else 0
-            result['line'].executed = 1
+            line.checksum = self.get_migration_checksum(line.migration)
+            line.message = 'OK' if len(result_line['result']) < 1 else result_line['result']
+            line.success = 1 if result_line['success'] is True else 0
+            line.executed = 1
 
             line.save(using=target)
-        self.commit()
         return True
 
     def migrate(self, target: str, migration: str):
-        return self.exec_single_target(target, migration)
+        if migration.find(';') > 0:
+            for line in migration.split(';')[:-1]:
+                result = self.exec_single_target(target, line)
+            return result
+        else:
+            return self.exec_single_target(target, migration)
 
     def get_migration_content(self, file_name: str):
         file = "{0}/{1}".format(self.__path, file_name)
@@ -83,3 +89,9 @@ class Migrate(Connection, Reader):
             print("Migration error: {0}".format(str(e)))
             sys.exit(3)
         return data
+
+    def get_migration_checksum(self, file_name: str):
+        file = "{0}/{1}".format(self.__path, file_name)
+        with open(file, 'rb') as handle:
+            return hashlib.sha256(handle.read()).hexdigest()
+            handle.close()
