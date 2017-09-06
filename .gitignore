@@ -16,3 +16,4 @@ migrations/
 spitzer.egg-info/
 build/
 dist/
+*.pyc
