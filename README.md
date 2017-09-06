@@ -25,12 +25,15 @@ your app's root directory.
 $ python -m spitzer install
 
 //Create and register a new blank migration file
-$ python -m spitzer install
+$ python -m spitzer create
 
 //Register your self-created migration file
 $ python -m spitzer make_migrations
 
 //Execute migrations on the configured target
 $ python -m spitzer migrate
+
+//List your migrations
+$ python -m spitzer show_migrations
 
 ```
