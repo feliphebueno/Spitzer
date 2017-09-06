@@ -3,6 +3,7 @@
 Django-based multi-target migration tool
 
 # Install requires
+- Python 3.4+
 - Django
 - PyYAML
 - terminaltables
