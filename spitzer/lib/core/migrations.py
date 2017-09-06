@@ -21,18 +21,22 @@ class Migrations(Connection):
             lines = SpitzerMigrationsModel.objects.using(target)
             migrations[target] = list()
             for line in lines:
-                obj = OrderedDict()
-                obj['id'] = line.id
-                obj['migration'] = line.migration
-                obj['checksum'] = line.checksum
-                obj['datetime'] = line.datetime.strftime("%Y-%m-%d %H:%M:%S")
-                obj['executed'] = line.executed
-                obj['success'] = line.success
-                obj['message'] = line.message
-
-                migrations[target].append(obj)
+                migrations[target].append(self.get_migration_data(line))
 
         return self.print_migration_data(migrations)
+
+    @staticmethod
+    def get_migration_data(line: SpitzerMigrationsModel):
+        obj = OrderedDict()
+        obj['id'] = line.id
+        obj['migration'] = line.migration
+        obj['checksum'] = line.checksum
+        obj['datetime'] = line.datetime.strftime("%Y-%m-%d %H:%M:%S")
+        obj['executed'] = line.executed
+        obj['success'] = line.success
+        obj['message'] = line.message
+
+        return obj
 
     def print_migration_data(self, migrations: dict):
         i = 0

@@ -30,7 +30,7 @@ class Main(object):
             Install(targets, path).run()
         elif cmd == 'create':
             Create(targets, path).run()
-        elif cmd == 'migrations':
+        elif cmd == 'show_migrations':
             Migrations(targets, path).run()
         elif cmd == 'make_migrations':
             MakeMigrations(targets, path).run()

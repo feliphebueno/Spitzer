@@ -35,9 +35,9 @@ class Create(Connection):
                 self.commit()
             except BaseException as e:
                 self.rollback()
-                print("Spitzer could not creta the migration file: {0}".format(str(e)))
+                print("Spitzer could not create the migration file: {0}".format(str(e)))
 
-        print("Migration file create on {0}/{1}.".format(self.__path, file_name))
+        print("Migration file created on {0}/{1}.".format(self.__path, file_name))
         return True
 
     def save_migration_file(self, file_name: str):
