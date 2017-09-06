@@ -1,0 +1,9 @@
+path: "/path/to/your/migrations/"
+connections:
+  -
+    host: ""
+    name: ""
+    user: ""
+    password: ""
+    driver: "mysql|postgres|sqlite|oracle"
+    port: 0
