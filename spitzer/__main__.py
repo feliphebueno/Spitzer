@@ -46,9 +46,8 @@ def main():
 
     working_dir = os.getcwd()
 
-    Main(command, working_dir).run()
     try:
-        pass
+        Main(command, working_dir).run()
     except BaseException as e:
         print(e)
         sys.exit(1)
