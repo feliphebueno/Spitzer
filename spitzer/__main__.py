@@ -1,7 +1,7 @@
-import getopt
 import sys
 import os
 import django
+from optparse import OptionParser
 
 sys.path.insert(0, os.path.realpath('.'))
 
@@ -16,38 +16,31 @@ commands = ('migrate', 'show_migrations', 'make_migrations', 'create', 'install'
 
 
 def main():
-    try:
-        opts, args = getopt.getopt(sys.argv[2:], "hv", ["help", "version"])
 
-        for o, a in opts:
-            if o in ("-V", "--version"):
-                version()
-                sys.exit()
-            if o in ("-V", "--version"):
-                version()
-                sys.exit()
-            elif o in ("-h", "--help"):
-                usage()
-                sys.exit()
-            else:
-                assert False, "unhandled option"
+    parser = OptionParser()
 
-        command = sys.argv[1]
-        if command not in commands:
-            raise getopt.GetoptError("Unrecognized command {0}".format(command))
-    except IndexError:
+    parser.add_option(
+        "-f", "--file", dest="file_path", help="Path to spitzer.yaml"
+    )
+    parser.add_option(
+        "-p", "--path", dest="path", help="Working dir"
+    )
+    parser.add_option(
+        "-v", "-V", "--version", action="callback", callback=version, help="Show Spitzer's version"
+    )
+
+    (options, args) = parser.parse_args()
+
+    command = args[0] if len(args) > 0 else None
+    working_dir = options.path if options.path is not None else os.getcwd()
+    file_path = options.file_path
+
+    if command not in commands:
+        print("Unrecognized command!")
         usage()
-        sys.exit(1)
-    except getopt.GetoptError as err:
-        # print help information and exit:
-        print(str(err))  # will print something like "option -a not recognized"
-        usage()
-        sys.exit(2)
-
-    working_dir = os.getcwd()
 
     try:
-        Main(command, working_dir).run()
+        Main(command, working_dir, file_path).run()
     except BaseException as e:
         print(e)
         sys.exit(1)
@@ -55,10 +48,12 @@ def main():
 
 def usage():
     print("python spitzer comand [{0}]".format(str(commands)))
+    sys.exit()
 
 
-def version():
+def version(*params):
     print(__version__)
+    sys.exit()
 
 if __name__ == "__main__":
     main()

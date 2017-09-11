@@ -13,12 +13,13 @@ class Main(object):
     __working_dir = str
     __config_loader = object
 
-    def __init__(self, command: str, wd: str):
+    def __init__(self, command: str, wd: str, file_path: str):
         self.__command = command
         self.__working_dir = wd
-        self.__config_loader = ConfigLoader(wd)
+        self.__config_loader = ConfigLoader(wd, file_path)
 
     def run(self):
+
         config_connections = self.__config_loader.get_connection_tartgets()
         connector = Connector(config_connections['connections'])
 
